@@ -8,7 +8,7 @@ public class Main {
         DBService dbService = new DBService();
         dbService.printConnectionInfo();
         try {
-            long userId = dbService.addUser("Boss", 6);
+            long userId = dbService.addUser("Boss2", 7);
             System.out.println("Added user id: " + userId);
 
             UsersDataSet dataSet = dbService.getUser(userId);

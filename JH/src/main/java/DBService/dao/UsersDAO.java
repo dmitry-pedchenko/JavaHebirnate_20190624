@@ -1,9 +1,11 @@
 package DBService.dao;
 
 import DBService.Executor.Executor;
+import DBService.Executor.ResultHandler;
 import DBService.dataSets.UsersDataSet;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
@@ -16,10 +18,18 @@ public class UsersDAO {
 
     public UsersDataSet get(long id) throws SQLException {
         return executor.execQuery("select * from table1 where col1 =" + id,
-                result -> {
-                    result.next();
-                    return new UsersDataSet(result.getLong(1), result.getString(2));
-                });
+                new ResultHandler<UsersDataSet>() {
+                    @Override
+                    public UsersDataSet handle(ResultSet resultSet) throws SQLException {
+                        resultSet.next();
+                        return new UsersDataSet(resultSet.getLong(1), resultSet.getString(2));
+                    }
+                }
+//                result -> {
+//                    result.next();
+//                    return new UsersDataSet(result.getLong(1), result.getString(2));
+//                }
+        );
     }
 
     public long getUserId(String name) throws SQLException {
